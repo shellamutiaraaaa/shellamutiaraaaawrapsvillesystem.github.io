@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wrapsville - Internal Staff & Order Management System</title>
+    <style>
+        :root {
+            --primary-color: #d92323;
+            --secondary-color: #222;
+            --bg-color: #f4f5f7;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --border-radius: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--secondary-color);
+            color: #fff;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 20px;
+            color: var(--primary-color);
+        }
+
+        header p {
+            font-size: 13px;
+            color: #ccc;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .card h2 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--bg-color);
+            color: var(--secondary-color);
+        }
+
+        .status-box {
+            background: #eef6ff;
+            border-left: 4px solid #2196F3;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        select, input, button {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .badge-success { background: #e8f5e9; color: #2e7d32; }
+        .badge-warning { background: #fff3e0; color: #ef6c00; }
+        .badge-danger { background: #ffebee; color: #c62828; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f8f9fa;
+        }
+
+        .timer {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div>
+            <h1>WRAPSVILLE INTERNAL SYSTEM</h1>
+            <p>Module 1: Staff Management & Module 2: Dynamic Pre-Order Slotting</p>
+        </div>
+        <div>
+            <span class="badge badge-success">System Active</span>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- MODULE 1: STAFF MANAGEMENT -->
+        <div class="card">
+            <h2>1. Wrapsville Staff Management System</h2>
+            
+            <div class="status-box">
+                <strong>Status Shift Dapur Hari Ini:</strong><br>
+                Total Staf Aktif: <span id="active-staff-count">3</span> / 3 Orang<br>
+                Kapasitas Maksimal Dapur: <span id="max-capacity-text">70 Porsi</span>
+            </div>
+
+            <div class="form-group">
+                <h3>Pengajuan Izin Karyawan (H-1 / H-2)</h3>
+            </div>
+            
+            <form id="leave-form">
+                <div class="form-group">
+                    <label for="staff-name">Nama Karyawan:</label>
+                    <select id="staff-name" required>
+                        <option value="Karyawan A (Juru Masak 1)">Karyawan A (Juru Masak 1)</option>
+                        <option value="Karyawan B (Juru Masak 2)">Karyawan B (Juru Masak 2)</option>
+                        <option value="Karyawan C (Operasional Dapur)">Karyawan C (Operasional Dapur)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="leave-type">Alasan Izin:</label>
+                    <select id="leave-type" required>
+                        <option value="Jadwal Kuliah Mendadak">Jadwal Kuliah Mendadak</option>
+                        <option value="Sakit">Sakit</option>
+                        <option value="Kepentingan Keluarga">Kepentingan Keluarga</option>
+                    </select>
+                </div>
+
+                <button type="submit">Ajukan Izin & Sesuaikan Kapasitas Harian</button>
+            </form>
+
+            <h3 style="margin-top: 20px; font-size: 14px;">Log Jadwal & Absensi:</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>Status</th>
+                        <th>Penyesuaian Kuota</th>
+                    </tr>
+                </thead>
+                <tbody id="attendance-log">
+                    <tr>
+                        <td>Karyawan A</td>
+                        <td><span class="badge badge-success">Hadir</span></td>
+                        <td>25 Porsi</td>
+                    </tr>
+                    <tr>
+                        <td>Karyawan B</td>
+                        <td><span class="badge badge-success">Hadir</span></td>
+                        <td>25 Porsi</td>
+                    </tr>
+                    <tr>
+                        <td>Karyawan C</td>
+                        <td><span class="badge badge-success">Hadir</span></td>
+                        <td>20 Porsi</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- MODULE 2: DYNAMIC PRE-ORDER SLOTTING & RESERVATION -->
+        <div class="card">
+            <h2>2. Dynamic Pre-Order Slotting System</h2>
+            
+            <div class="status-box" style="background: #fff8e1; border-color: #ffa000;">
+                <strong>Sisa Kuota Porsi Hari Ini:</strong><br>
+                <span id="remaining-stock" style="font-size: 24px; font-weight: bold; color: #d32f2f;">70</span> Porsi Tersedia
+            </div>
+
+            <div class="form-group">
+                <h3>Simulasi Pemesanan Pelanggan (Website Checkout)</h3>
+                <p style="font-size: 12px; color: #666; margin-bottom: 10px;">
+                    Fitur ini mencegah <i>bug race condition</i> dengan mengunci kuota sementara selama 5 menit saat pelanggan menekan tombol checkout.
+                </p>
+            </div>
+
+            <div class="form-group">
+                <label for="order-qty">Jumlah Porsi Diminta:</label>
+                <input type="number" id="order-qty" value="1" min="1" max="10">
+            </div>
+
+            <button id="checkout-btn">Mulai Checkout (Kunci Slot Kuota)</button>
+
+            <div id="checkout-status" style="margin-top: 15px; display: none;">
+                <div class="status-box" style="background: #e8f5e9; border-color: #388e3c;">
+                    <strong>Slot Kuota Berhasil Dikunci!</strong><br>
+                    Sisa waktu transaksi: <span class="timer" id="timer">05:00</span><br>
+                    <small>Sistem secara otomatis mengamankan kuota Anda dari pembeli lain.</small>
+                </div>
+                <button id="confirm-pay-btn" style="background-color: #2e7d32;">Konfirmasi & Selesaikan Pembayaran</button>
+            </div>
+
+            <h3 style="margin-top: 20px; font-size: 14px;">Log Pemesanan Terkini:</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID Pesanan</th>
+                        <th>Porsi</th>
+                        <th>Status Kuota</th>
+                    </tr>
+                </thead>
+                <tbody id="order-log">
+                    <!-- Dynamic Log -->
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+        // System State
+        let totalCapacity = 70;
+        let remainingStock = 70;
+        let activeStaff = 3;
+        let timerInterval;
+
+        // Elements
+        const remainingStockEl = document.getElementById('remaining-stock');
+        const activeStaffCountEl = document.getElementById('active-staff-count');
+        const maxCapacityTextEl = document.getElementById('max-capacity-text');
+        const leaveForm = document.getElementById('leave-form');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const checkoutStatus = document.getElementById('checkout-status');
+        const confirmPayBtn = document.getElementById('confirm-pay-btn');
+        const orderLog = document.getElementById('order-log');
+        const timerEl = document.getElementById('timer');
+
+        // Form Izin Handlers
+        leaveForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const staffName = document.getElementById('staff-name').value;
+            
+            if (activeStaff > 1) {
+                activeStaff--;
+                totalCapacity = activeStaff === 2 ? 50 : 25;
+                remainingStock = Math.min(remainingStock, totalCapacity);
+
+                // Update UI
+                activeStaffCountEl.textContent = activeStaff;
+                maxCapacityTextEl.textContent = totalCapacity + " Porsi";
+                remainingStockEl.textContent = remainingStock;
+
+                // Add to log
+                const attendanceLog = document.getElementById('attendance-log');
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${staffName}</td>
+                    <td><span class="badge badge-danger">Izin/Absen</span></td>
+                    <td>Kapasitas Turun</td>
+                `;
+                attendanceLog.appendChild(row);
+
+                alert(`Izin disetujui. Kapasitas harian disesuaikan secara otomatis menjadi ${totalCapacity} porsi.`);
+            } else {
+                alert('Tidak dapat mengajukan izin. Minimal harus ada 1 staf bertugas.');
+            }
+        });
+
+        // Checkout & Slot Locking Simulation (Anti Race Condition)
+        checkoutBtn.addEventListener('click', function() {
+            const qty = parseInt(document.getElementById('order-qty').value);
+
+            if (qty > remainingStock) {
+                alert('Maaf, sisa kuota porsi harian tidak mencukupi!');
+                return;
+            }
+
+            // Lock slot temporarily
+            remainingStock -= qty;
+            remainingStockEl.textContent = remainingStock;
+            
+            checkoutBtn.disabled = true;
+            checkoutStatus.style.display = 'block';
+
+            // Start 5 minute countdown
+            let timeLeft = 300;
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                timerEl.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    // Timeout: release stock
+                    remainingStock += qty;
+                    remainingStockEl.textContent = remainingStock;
+                    alert('Waktu transaksi habis. Slot kuota dikembalikan ke sistem.');
+                    checkoutStatus.style.display = 'none';
+                    checkoutBtn.disabled = false;
+                }
+                timeLeft--;
+            }, 1000);
+        });
+
+        // Confirm Payment
+        confirmPayBtn.addEventListener('click', function() {
+            const qty = parseInt(document.getElementById('order-qty').value);
+            clearInterval(timerInterval);
+
+            // Add order to log
+            const orderId = 'WV-' + Math.floor(1000 + Math.random() * 9000);
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${orderId}</td>
+                <td>${qty} Porsi</td>
+                <td><span class="badge badge-success">Terbayar & Terkunci</span></td>
+            `;
+            orderLog.prepend(row);
+
+            alert('Pembayaran berhasil! Pesanan telah masuk ke daftar produksi dapur.');
+
+            // Reset checkout state
+            checkoutStatus.style.display = 'none';
+            checkoutBtn.disabled = false;
+        });
+    </script>
+</body>
+</html>
